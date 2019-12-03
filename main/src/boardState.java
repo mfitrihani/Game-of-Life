@@ -1,14 +1,18 @@
 import java.util.Random;
 
 public class boardState {
-    int height;
-    int width;
-    String[][] board;
+    int height; //y
+    int width; //x
+    String[][] board; //[x][y]
 
     public boardState(int height, int width) {
         this.height = height;
         this.width = width;
         board = new String[this.height][this.width];
+    }
+
+    public boardState(String[][] board) {
+        this.board = board;
     }
 
     public void allDeathState(){
@@ -41,16 +45,17 @@ public class boardState {
     public void nextState(){
         for(int i = 0; i<height;i++){
             for (int j=0;j<width;j++){
-                board[i][j]=calculateState(j,i);
+                board[i][j]=calculateState(i,j);
             }
         }
     }
 
 
-    public String calculateState(int xPosition, int yPosition){
-        int totalNeighbor = calculateNeighbor(xPosition,yPosition);
+    public String calculateState(int yPosition, int xPosition){
+        int totalNeighbor = calculateNeighbor(yPosition,xPosition);
         String nextState = "?";
         if(board[yPosition][xPosition].equals("#")){
+            System.out.println("true");
             if(totalNeighbor<2){
                 nextState = " ";
             }
@@ -61,15 +66,16 @@ public class boardState {
                 nextState = " ";
             }
         }
-        else if (board[xPosition][yPosition].equals(" ")&&totalNeighbor==3){
+        else if (board[yPosition][xPosition].equals(" ")&&totalNeighbor==3){
             nextState = "#";
         }
-
+        else
+            nextState = " ";
 
         return nextState;
     }
 
-    public int calculateNeighbor(int x_position,int y_position){
+    public int calculateNeighbor(int y_position,int x_position){
         int totalNeighbor=0;
 
         for (int x = -1;x<=1;x++){
@@ -97,5 +103,9 @@ public class boardState {
 
     public String[][] getBoard() {
         return board;
+    }
+
+    public String getPartBoard(int x,int y) {
+        return board[x][y];
     }
 }
