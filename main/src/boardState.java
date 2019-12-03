@@ -14,8 +14,10 @@ public class boardState {
     }
 
     public boardState(String[][] board) {
-        this.board = board;
+        height=board.length; // row
+        width=board[0].length; // col
         tempBoard = new String[this.height][this.width];
+        this.board=board;
     }
 
     public void allDeathState(){
@@ -57,6 +59,13 @@ public class boardState {
                 calculateState(i,j);
             }
         }
+
+        for(int i = 0; i<height;i++){
+            for (int j=0;j<width;j++){
+                board[i][j]=tempBoard[i][j];
+            }
+        }
+
         for(int i = 0; i<height;i++){
             for (int j=0;j<width;j++){
                 tempBoard[i][j]=null;
