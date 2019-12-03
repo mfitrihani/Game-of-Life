@@ -1,18 +1,21 @@
+import java.util.Arrays;
 import java.util.Random;
 
 public class boardState {
-    int height; //y
-    int width; //x
-    String[][] board; //[x][y]
+    int height;
+    int width;
+    String[][] board,tempBoard;
 
     public boardState(int height, int width) {
         this.height = height;
         this.width = width;
         board = new String[this.height][this.width];
+        tempBoard = new String[this.height][this.width];
     }
 
     public boardState(String[][] board) {
         this.board = board;
+        tempBoard = new String[this.height][this.width];
     }
 
     public void allDeathState(){
@@ -45,34 +48,42 @@ public class boardState {
     public void nextState(){
         for(int i = 0; i<height;i++){
             for (int j=0;j<width;j++){
-                board[i][j]=calculateState(i,j);
+                tempBoard[i][j]=board[i][j];
+            }
+        }
+
+        for(int i = 0; i<height;i++){
+            for (int j=0;j<width;j++){
+                calculateState(i,j);
+            }
+        }
+        for(int i = 0; i<height;i++){
+            for (int j=0;j<width;j++){
+                tempBoard[i][j]=null;
             }
         }
     }
 
 
-    public String calculateState(int yPosition, int xPosition){
+    public void calculateState(int yPosition, int xPosition){
         int totalNeighbor = calculateNeighbor(yPosition,xPosition);
-        String nextState = "?";
-        if(board[yPosition][xPosition].equals("#")){
-            System.out.println("true");
+        if(tempBoard[yPosition][xPosition].equals("#")){
             if(totalNeighbor<2){
-                nextState = " ";
+                tempBoard[yPosition][xPosition]=" ";
             }
             else if(totalNeighbor==2||totalNeighbor==3){
-                nextState = "#";
+                tempBoard[yPosition][xPosition]= "#";
             }
             else if(totalNeighbor>3){
-                nextState = " ";
+                tempBoard[yPosition][xPosition]= " ";
             }
         }
-        else if (board[yPosition][xPosition].equals(" ")&&totalNeighbor==3){
-            nextState = "#";
+        else if (tempBoard[yPosition][xPosition].equals(" ")&&totalNeighbor==3){
+            tempBoard[yPosition][xPosition]= "#";
         }
         else
-            nextState = " ";
+            tempBoard[yPosition][xPosition]= " ";
 
-        return nextState;
     }
 
     public int calculateNeighbor(int y_position,int x_position){
@@ -108,4 +119,5 @@ public class boardState {
     public String getPartBoard(int x,int y) {
         return board[x][y];
     }
+
 }

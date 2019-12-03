@@ -8,6 +8,7 @@ public class main {
         String[][] initialState2 = {{" "," ","#"},{" ","#","#"},{" "," "," "}};
         String[][] expectedNextState2 = {{" ","#","#"},{" ","#","#"},{" "," "," "}};
 
+
         //test1
         boardState test1 = new boardState(initialState1);
         test1.nextState();
@@ -26,6 +27,7 @@ public class main {
         else
             System.out.print("failure");
     }
+
 
     public static Boolean checkEquality(String[][] x, String[][] y){
         for (int i=0;i<3;i++) {
