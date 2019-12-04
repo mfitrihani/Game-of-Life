@@ -1,10 +1,9 @@
-import java.util.Arrays;
 import java.util.Random;
 
 public class boardState {
     int height;
     int width;
-    String[][] board,tempBoard;
+    String[][] board, tempBoard;
 
     public boardState(int height, int width) {
         this.height = height;
@@ -14,96 +13,88 @@ public class boardState {
     }
 
     public boardState(String[][] board) {
-        height=board.length; // row
-        width=board[0].length; // col
+        height = board.length; // row
+        width = board[0].length; // col
         tempBoard = new String[this.height][this.width];
-        this.board=board;
+        this.board = board;
     }
 
-    public void allDeathState(){
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
-                board[i][j]=" ";
+    public void allDeathState() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j] = " ";
             }
         }
     }
 
-    public void allAliveState(){
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
-                board[i][j]="#";
+    public void allAliveState() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                board[i][j] = "#";
             }
         }
     }
 
-    public void randomState(){
-        String[] state = {"#"," "};
+    public void randomState() {
+        String[] state = {"#", " "};
 
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 int rnd = new Random().nextInt(state.length);
-                board[i][j]= state[rnd];
+                board[i][j] = state[rnd];
             }
         }
     }
 
-    public void nextState(){
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
-                tempBoard[i][j]=board[i][j];
+    public void nextState() {
+        for (int i = 0; i < height; i++) {
+            if (width >= 0) System.arraycopy(board[i], 0, tempBoard[i], 0, width);
+        }
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                calculateState(i, j);
             }
         }
 
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
-                calculateState(i,j);
-            }
+        for (int i = 0; i < height; i++) {
+            if (width >= 0) System.arraycopy(tempBoard[i], 0, board[i], 0, width);
         }
 
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
-                board[i][j]=tempBoard[i][j];
-            }
-        }
-
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
-                tempBoard[i][j]=null;
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                tempBoard[i][j] = null;
             }
         }
     }
 
 
-    public void calculateState(int yPosition, int xPosition){
-        int totalNeighbor = calculateNeighbor(yPosition,xPosition);
-        if(tempBoard[yPosition][xPosition].equals("#")){
-            if(totalNeighbor<2){
-                tempBoard[yPosition][xPosition]=" ";
+    public void calculateState(int yPosition, int xPosition) {
+        int totalNeighbor = calculateNeighbor(yPosition, xPosition);
+        if (tempBoard[yPosition][xPosition].equals("#")) {
+            if (totalNeighbor < 2) {
+                tempBoard[yPosition][xPosition] = " ";
+            } else if (totalNeighbor == 2 || totalNeighbor == 3) {
+                tempBoard[yPosition][xPosition] = "#";
+            } else {
+                tempBoard[yPosition][xPosition] = " ";
             }
-            else if(totalNeighbor==2||totalNeighbor==3){
-                tempBoard[yPosition][xPosition]= "#";
-            }
-            else if(totalNeighbor>3){
-                tempBoard[yPosition][xPosition]= " ";
-            }
-        }
-        else if (tempBoard[yPosition][xPosition].equals(" ")&&totalNeighbor==3){
-            tempBoard[yPosition][xPosition]= "#";
-        }
-        else
-            tempBoard[yPosition][xPosition]= " ";
+        } else if (tempBoard[yPosition][xPosition].equals(" ") && totalNeighbor == 3) {
+            tempBoard[yPosition][xPosition] = "#";
+        } else
+            tempBoard[yPosition][xPosition] = " ";
 
     }
 
-    public int calculateNeighbor(int y_position,int x_position){
-        int totalNeighbor=0;
+    public int calculateNeighbor(int y_position, int x_position) {
+        int totalNeighbor = 0;
 
-        for (int x = -1;x<=1;x++){
-            for (int y = -1;y<=1;y++){
-                if ((x_position+x<0)||(y_position+y<0)||(x_position+x>width-1)||(y_position+y>height-1)||(x==0&&y==0)){
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if ((x_position + x < 0) || (y_position + y < 0) || (x_position + x > width - 1) || (y_position + y > height - 1) || (x == 0 && y == 0)) {
                     continue;
-                 }
-                if (board[y_position+y][x_position+x].equals("#")){
+                }
+                if (board[y_position + y][x_position + x].equals("#")) {
                     totalNeighbor++;
                 }
             }
@@ -111,9 +102,9 @@ public class boardState {
         return totalNeighbor;
     }
 
-    public void printBoard(){
-        for(int i = 0; i<height;i++){
-            for (int j=0;j<width;j++){
+    public void printBoard() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
                 System.out.print(board[i][j]);
             }
             System.out.println();
@@ -125,7 +116,7 @@ public class boardState {
         return board;
     }
 
-    public String getPartBoard(int x,int y) {
+    public String getPartBoard(int x, int y) {
         return board[x][y];
     }
 
