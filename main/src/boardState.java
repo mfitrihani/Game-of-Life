@@ -1,9 +1,9 @@
 import java.util.Random;
 
 public class boardState {
-    int height;
-    int width;
-    String[][] board, tempBoard;
+    private int height;
+    private int width;
+    private String[][] board, tempBoard;
 
     public boardState(int height, int width) {
         this.height = height;
@@ -13,10 +13,21 @@ public class boardState {
     }
 
     public boardState(String[][] board) {
-        height = board.length; // row
-        width = board[0].length; // col
+        height = board.length;
+        width = board[0].length;
         tempBoard = new String[this.height][this.width];
         this.board = board;
+    }
+
+    public boardState(){}
+
+
+    public int getHeight() {
+        return height;
+    }
+
+    public int getWidth() {
+        return width;
     }
 
     public void allDeathState() {
@@ -33,6 +44,19 @@ public class boardState {
                 board[i][j] = "#";
             }
         }
+    }
+
+    public void customStateToad(){
+        board = new String[][]{
+                {" "," "," "," "," "," "},
+                {" "," "," "," "," "," "},
+                {" "," ","#","#","#"," "},
+                {" ","#","#","#"," "," "},
+                {" "," "," "," "," "," "},
+                {" "," "," "," "," "," "},};
+
+        height = board.length;
+        width = board[0].length;
     }
 
     public void randomState() {

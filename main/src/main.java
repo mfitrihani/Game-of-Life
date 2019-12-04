@@ -5,10 +5,10 @@ import java.awt.event.ActionListener;
 public class main {
 
     public static void main(String[] args) {
-        boardState test = new boardState(3,3);
-        test.allAliveState();
+        boardState test = new boardState();
+        test.customStateToad();
 
-        boardGui testGUI = new boardGui(test.getBoard());
+        boardGui testGUI = new boardGui(test.getBoard(),test.getHeight(),test.getWidth());
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
@@ -20,7 +20,7 @@ public class main {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //test.nextState();
+                test.nextState();
                 testGUI.repaint();
             }
         }).start();

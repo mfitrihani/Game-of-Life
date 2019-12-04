@@ -3,14 +3,14 @@ import java.awt.*;
 import java.beans.Transient;
 
 public class boardGui extends JPanel {
-    int height;
-    int width;
-    String[][] board;
+    private int height;
+    private int width;
+    private String[][] board;
 
-    public boardGui(String[][] board){
+    public boardGui(String[][] board,int height,int width){
         this.board = board;
-        this.height = board[0].length;
-        this.width = board.length;
+        this.height = height;
+        this.width = width;
     }
 
     @Override
@@ -26,9 +26,9 @@ public class boardGui extends JPanel {
 
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (board[i][j].equals("#")) {
+                if (board[j][i].equals("#")) {
                     g.setColor(Color.red);
-                    g.fillRect(j * 4, i * 4, 4, 4);
+                    g.fillRect(i * 4, j * 4, 4, 4);
                 }
             }
         }
