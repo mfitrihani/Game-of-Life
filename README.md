@@ -7,9 +7,14 @@
 >
 >[Excerpt From Wiki](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
+`Screenshots
+`
+
+![gif od program](https://imgur.com/onBNIRp)
+
 `Planned Stuffs
 `
-- [ ] Complete this readme with screenshots, description etc.
+- [x] Complete this readme with screenshots, description etc.
 - [ ] Implement user interface
 - [ ] Add more control (speed, undo etc.)
 - [ ] Allow user setup custom initial state.

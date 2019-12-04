@@ -1,15 +1,10 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class main {
 
     public static void main(String[] args) {
-        boardState test = new boardState();
-        test.customStateToad();
-        test.printBoard();
-        test.nextState();
-        test.printBoard();
+        boardState test = new boardState(100,100);
+        test.randomState();
 
         boardGui testGUI = new boardGui(test.getBoard(),test.getHeight(),test.getWidth());
 
@@ -19,13 +14,9 @@ public class main {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
-        new Timer(100, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                test.nextState();
-                testGUI.repaint();
-            }
+        new Timer(100, e -> {
+            test.nextState();
+            testGUI.repaint();
         }).start();
 
     }
