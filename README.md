@@ -10,7 +10,7 @@
 `Screenshots
 `
 
-![gif od program](https://imgur.com/onBNIRp)
+![gif od program](https://imgur.com/onBNIRp.gif)
 
 `Planned Stuffs
 `
