@@ -7,6 +7,9 @@ public class main {
     public static void main(String[] args) {
         boardState test = new boardState();
         test.customStateToad();
+        test.printBoard();
+        test.nextState();
+        test.printBoard();
 
         boardGui testGUI = new boardGui(test.getBoard(),test.getHeight(),test.getWidth());
 
@@ -24,6 +27,7 @@ public class main {
                 testGUI.repaint();
             }
         }).start();
+
     }
 
 
