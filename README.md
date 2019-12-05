@@ -10,13 +10,13 @@
 `Screenshots
 `
 
-![gif od program](https://imgur.com/onBNIRp.gif)
+![gif of program](https://imgur.com/onBNIRp.gif)
 
 `Planned Stuffs
 `
 - [x] Complete this readme with screenshots, description etc.
-- [ ] Implement user interface
-- [ ] Add more control (speed, undo etc.)
+- [x] Implement user interface
+- [ ] Add more control (speed,pause, undo etc.)
 - [ ] Allow user setup custom initial state.
 - [ ] Release stable program
 
