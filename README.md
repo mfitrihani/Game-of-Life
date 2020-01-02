@@ -16,6 +16,8 @@
 `
 - [x] Complete this readme with screenshots, description etc.
 - [x] Implement user interface
+- [x] Allow initial state to be read from text file
+- [ ] revise code(it's messy)
 - [ ] Add more control (speed,pause, undo etc.)
 - [ ] Allow user setup custom initial state.
 - [ ] Release stable program
