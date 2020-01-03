@@ -6,8 +6,6 @@ public class main {
         boardState test = new boardState(50,50);
         test.randomState();
         test.render(100);
-
-
     }
 
 

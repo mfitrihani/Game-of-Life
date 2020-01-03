@@ -54,6 +54,14 @@ public class boardState {
             testGUI.repaint();
         }).start();
     }
+
+    public void undo(){
+        for (int x = 0 ; x < board.length ; x++){
+            board[x] = Arrays.copyOf(previousBoard[x],previousBoard[x].length);
+            Arrays.fill(previousBoard[x],null);
+        }
+    }
+
     public void nextState(){
         //copy board to previous board
         for (int x = 0 ; x < board.length ; x++)
