@@ -5,13 +5,13 @@ import java.beans.Transient;
 public class boardGui extends JPanel {
     private int height;
     private int width;
-    private String[][] board;
+    private Boolean[][] board;
     private int generationCounter=0;
 
-    public boardGui(String[][] board,int height,int width){
+    public boardGui(Boolean[][] board){
         this.board = board;
-        this.height = height;
-        this.width = width;
+        this.height = board.length;
+        this.width = board[0].length;
     }
 
     @Override
@@ -28,7 +28,7 @@ public class boardGui extends JPanel {
         g.drawString("Generation: " + generationCounter++, 0, 10);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
-                if (board[j][i].equals("#")) {
+                if (board[j][i]) {
                     g.setColor(Color.red);
                     g.fillRect(i * 4, j * 4, 4, 4);
                 }
@@ -38,3 +38,4 @@ public class boardGui extends JPanel {
         g.setColor(gColor);
     }
 }
+

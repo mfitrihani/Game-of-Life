@@ -1,184 +1,141 @@
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import javax.swing.*;
+import java.io.*;
+import java.util.Arrays;
 import java.util.Random;
 
 public class boardState {
-    private int height;
-    private int width;
-    private String[][] board, tempBoard;
+    private Boolean[][] board, previousBoard;
 
-    public boardState(int height, int width) {
-        this.height = height;
-        this.width = width;
-        board = new String[this.height][this.width];
-        tempBoard = new String[this.height][this.width];
+    public boardState(int width, int height) {
+        this.board = new Boolean[height][width];
+        this.previousBoard = new Boolean[height][width];
+
+    }
+    public boardState(Boolean[][] customBoard){
+        this.board = customBoard;
+        this.previousBoard = customBoard;
     }
 
-    public boardState(String[][] board) {
-        height = board.length;
-        width = board[0].length;
-        tempBoard = new String[this.height][this.width];
-        this.board = board;
-    }
-
-    public boardState(String textFileDirectory) throws IOException {
-        board = new String[100][100];
-        getFromTextFile(textFileDirectory);
-    }
-
-    public void getFromTextFile(String textFileDirectory) throws IOException {
-        BufferedReader temp = new BufferedReader(new FileReader(new File(textFileDirectory)));
-        StringBuilder build = new StringBuilder();
+    public boardState(String textFilePath) throws IOException {
+        BufferedReader temp = new BufferedReader(new FileReader(textFilePath));
+        StringBuilder stringBuilder = new StringBuilder();
         String line = temp.readLine();
-        while (line != null) {
-            build.append(line);
-            build.append(" ");
+        while (line!=null){
+            stringBuilder.append(line).append(" ");
             line = temp.readLine();
         }
-        String[] temp2 = build.toString().split(" ");
-        String[][] board = new String[temp2.length][temp2[0].length()];
-        tempBoard = new String[temp2.length][temp2[0].length()];
-        for (int x = 0; x < temp2.length; x++) {
-            board[x] = temp2[x].split("");
+        String[] temp1 = stringBuilder.toString().split(" ");
+        String[][] tempBoard = new String[temp1.length][temp1[0].length()];
+        for (int x = 0 ; x < temp1.length ; x++){
+            tempBoard[x] = temp1[x].split("");
         }
-        height = board.length;
-        width = board[0].length;
-        for (int x = 0 ; x < height ; x++){
-            for (int y =0 ; y< width;y++){
-                if (board[x][y]!="#") board[x][y] = " ";
+
+        this.board = new Boolean[tempBoard.length][tempBoard[0].length];
+
+        for(int x = 0 ; x<tempBoard.length ; x++){
+            for (int y = 0 ; y<tempBoard[0].length ; y++){
+                board[x][y] = tempBoard[x][y].equals("*");
             }
         }
+        previousBoard = new Boolean[tempBoard.length][tempBoard[0].length];
     }
 
-    public int getHeight() {
-        return height;
-    }
+    public void render(int speed){
+        boardGui testGUI = new boardGui(board);
 
-    public int getWidth() {
-        return width;
+        JFrame frame = new JFrame();
+        frame.getContentPane().add(testGUI);
+        frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        frame.setVisible(true);
+        new Timer(speed, e -> {
+            nextState();
+            testGUI.repaint();
+        }).start();
     }
-
-    public void allDeathState() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                board[i][j] = " ";
+    public void nextState(){
+        //copy board to previous board
+        for (int x = 0 ; x < board.length ; x++)
+            previousBoard[x] = Arrays.copyOf(board[x],board[x].length);
+        //next state
+        Boolean[][] tempBoard = new Boolean[board.length][board[0].length];
+        for (int x = 0 ; x < tempBoard.length ; x++){
+            for (int y = 0 ; y < tempBoard[0].length ; y++){
+                tempBoard[x][y] = calculateState(y,x);
             }
+        }
+        //save
+        for (int x = 0 ; x < board.length ; x++){
+            board[x] = Arrays.copyOf(tempBoard[x],tempBoard[x].length);
+        }
+    }
+
+    public Boolean calculateState(int width, int height) {
+        int totalNeighbor = calculateNeighbor(width, height);
+        if (board[height][width]) {
+            return totalNeighbor == 2 || totalNeighbor == 3;
+        } else {
+            return totalNeighbor == 3;
+        }
+    }
+
+    public int calculateNeighbor(int width, int height) {
+        int neighbor = 0;
+        for (int y = -1; y < 2; y++) {
+            for (int x = -1; x < 2; x++) {
+                if ((y==0)&&(x==0)) { }
+                else if (((x+width)<0)||((y+height)<0)) { }
+                else if ((x+width)>=board[0].length||(y+height)>=board.length) { }
+                else if (board[y+height][x+width])
+                    neighbor++;
+            }
+        }
+        return neighbor;
+    }
+
+    public void randomState() {
+        for (int x = 0; x < board.length; x++) {
+            for (int y = 0; y < board[0].length; y++) {
+                board[x][y] = new Random().nextBoolean();
+            }
+        }
+        for (int x = 0; x < board.length; x++) {
+            previousBoard[x] = Arrays.copyOf(board[x], board[x].length);
         }
     }
 
     public void allAliveState() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                board[i][j] = "#";
-            }
+        for (int x = 0; x < board.length; x++) {
+            Arrays.fill(board[x], true);
+            Arrays.fill(previousBoard[x], true);
         }
     }
 
-    public void customStateToad(){
-        board = new String[][]{
-                {" "," "," "," "," "," "},
-                {" "," "," "," "," "," "},
-                {" "," ","#","#","#"," "},
-                {" ","#","#","#"," "," "},
-                {" "," "," "," "," "," "},
-                {" "," "," "," "," "," "},};
-
-        tempBoard = new String[][]{
-                {" "," "," "," "," "," "},
-                {" "," "," "," "," "," "},
-                {" "," ","#","#","#"," "},
-                {" ","#","#","#"," "," "},
-                {" "," "," "," "," "," "},
-                {" "," "," "," "," "," "},};
-
-        height = board.length;
-        width = board[0].length;
-    }
-
-    public void randomState() {
-        String[] state = {"#", " "};
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                int rnd = new Random().nextInt(state.length);
-                board[i][j] = state[rnd];
-            }
+    public void allDeathState() {
+        for (int x = 0; x < board.length; x++) {
+            Arrays.fill(board[x], false);
+            Arrays.fill(previousBoard[x], false);
         }
-    }
-
-    public void nextState() {
-        for (int i = 0; i < height; i++) {
-            if (width >= 0) System.arraycopy(board[i], 0, tempBoard[i], 0, width);
-        }
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                calculateState(i, j);
-            }
-        }
-
-        for (int i = 0; i < height; i++) {
-            if (width >= 0) System.arraycopy(tempBoard[i], 0, board[i], 0, width);
-        }
-
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                tempBoard[i][j] = null;
-            }
-        }
-    }
-
-
-    public void calculateState(int yPosition, int xPosition) {
-        int totalNeighbor = calculateNeighbor(yPosition, xPosition);
-        if (tempBoard[yPosition][xPosition].equals("#")) {
-            if (totalNeighbor < 2) {
-                tempBoard[yPosition][xPosition] = " ";
-            } else if (totalNeighbor == 2 || totalNeighbor == 3) {
-                tempBoard[yPosition][xPosition] = "#";
-            } else {
-                tempBoard[yPosition][xPosition] = " ";
-            }
-        } else if (tempBoard[yPosition][xPosition].equals(" ") && totalNeighbor == 3) {
-            tempBoard[yPosition][xPosition] = "#";
-        } else
-            tempBoard[yPosition][xPosition] = " ";
-
-    }
-
-    public int calculateNeighbor(int y_position, int x_position) {
-        int totalNeighbor = 0;
-
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                if ((x_position + x < 0) || (y_position + y < 0) || (x_position + x > width - 1) || (y_position + y > height - 1) || (x == 0 && y == 0)) {
-                    continue;
-                }
-                if (board[y_position + y][x_position + x].equals("#")) {
-                    totalNeighbor++;
-                }
-            }
-        }
-        return totalNeighbor;
     }
 
     public void printBoard() {
-        for (String[] x: board){
-            for (String y: x){
-                System.out.print(y);
-            }
-            System.out.println();
+        for (Boolean[] s : board) {
+            System.out.println(Arrays.toString(s));
         }
+        System.out.println();
+        System.out.println("________________________________________");
+        for (Boolean[] s : previousBoard) {
+            System.out.println(Arrays.toString(s));
+        }
+        System.out.println();
     }
 
-    public String[][] getBoard() {
-        return board;
+    public int getWidth() {
+        return board[0].length;
     }
 
-    public String getPartBoard(int x, int y) {
-        return board[x][y];
+    public int getHeight() {
+        return board.length;
     }
-
 }
