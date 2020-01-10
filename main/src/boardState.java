@@ -1,9 +1,12 @@
 import javax.swing.*;
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Random;
 
 public class boardState {
+    boardGui testGUI;
     private Boolean[][] board, previousBoard;
 
     public boardState(int width, int height) {
@@ -11,7 +14,8 @@ public class boardState {
         this.previousBoard = new Boolean[height][width];
 
     }
-    public boardState(Boolean[][] customBoard){
+
+    public boardState(Boolean[][] customBoard) {
         this.board = customBoard;
         this.previousBoard = customBoard;
     }
@@ -20,28 +24,37 @@ public class boardState {
         BufferedReader temp = new BufferedReader(new FileReader(textFilePath));
         StringBuilder stringBuilder = new StringBuilder();
         String line = temp.readLine();
-        while (line!=null){
+        while (line != null) {
             stringBuilder.append(line).append(" ");
             line = temp.readLine();
         }
         String[] temp1 = stringBuilder.toString().split(" ");
         String[][] tempBoard = new String[temp1.length][temp1[0].length()];
-        for (int x = 0 ; x < temp1.length ; x++){
+        for (int x = 0; x < temp1.length; x++) {
             tempBoard[x] = temp1[x].split("");
         }
 
         this.board = new Boolean[tempBoard.length][tempBoard[0].length];
 
-        for(int x = 0 ; x<tempBoard.length ; x++){
-            for (int y = 0 ; y<tempBoard[0].length ; y++){
+        for (int x = 0; x < tempBoard.length; x++) {
+            for (int y = 0; y < tempBoard[0].length; y++) {
                 board[x][y] = tempBoard[x][y].equals("*");
             }
         }
         previousBoard = new Boolean[tempBoard.length][tempBoard[0].length];
     }
 
-    public void render(int speed){
-        boardGui testGUI = new boardGui(board);
+    public void render() {
+        testGUI = new boardGui(board);
+        testGUI.setLayout(null);
+        //play button
+        JButton play = new JButton();
+        play.addActionListener(e -> play());
+        play.setBorder(null);
+        play.setLocation(0, 10);
+        play.setText("PLAY");
+        play.setSize(50, 20);
+        testGUI.add(play);
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
@@ -49,33 +62,36 @@ public class boardState {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
-        new Timer(speed, e -> {
+    }
+
+    public void play() {
+        new Timer(100, e -> {
             nextState();
             testGUI.repaint();
         }).start();
     }
 
-    public void undo(){
-        for (int x = 0 ; x < board.length ; x++){
-            board[x] = Arrays.copyOf(previousBoard[x],previousBoard[x].length);
-            Arrays.fill(previousBoard[x],null);
+    public void undo() {
+        for (int x = 0; x < board.length; x++) {
+            board[x] = Arrays.copyOf(previousBoard[x], previousBoard[x].length);
+            Arrays.fill(previousBoard[x], null);
         }
     }
 
-    public void nextState(){
+    public void nextState() {
         //copy board to previous board
-        for (int x = 0 ; x < board.length ; x++)
-            previousBoard[x] = Arrays.copyOf(board[x],board[x].length);
+        for (int x = 0; x < board.length; x++)
+            previousBoard[x] = Arrays.copyOf(board[x], board[x].length);
         //next state
         Boolean[][] tempBoard = new Boolean[board.length][board[0].length];
-        for (int x = 0 ; x < tempBoard.length ; x++){
-            for (int y = 0 ; y < tempBoard[0].length ; y++){
-                tempBoard[x][y] = calculateState(y,x);
+        for (int x = 0; x < tempBoard.length; x++) {
+            for (int y = 0; y < tempBoard[0].length; y++) {
+                tempBoard[x][y] = calculateState(y, x);
             }
         }
         //save
-        for (int x = 0 ; x < board.length ; x++){
-            board[x] = Arrays.copyOf(tempBoard[x],tempBoard[x].length);
+        for (int x = 0; x < board.length; x++) {
+            board[x] = Arrays.copyOf(tempBoard[x], tempBoard[x].length);
         }
     }
 
@@ -92,10 +108,10 @@ public class boardState {
         int neighbor = 0;
         for (int y = -1; y < 2; y++) {
             for (int x = -1; x < 2; x++) {
-                if ((y==0)&&(x==0)) { }
-                else if (((x+width)<0)||((y+height)<0)) { }
-                else if ((x+width)>=board[0].length||(y+height)>=board.length) { }
-                else if (board[y+height][x+width])
+                if ((y == 0) && (x == 0)) {
+                } else if (((x + width) < 0) || ((y + height) < 0)) {
+                } else if ((x + width) >= board[0].length || (y + height) >= board.length) {
+                } else if (board[y + height][x + width])
                     neighbor++;
             }
         }
