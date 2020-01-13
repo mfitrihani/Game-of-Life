@@ -14,13 +14,13 @@
 
 `Planned Stuffs
 `
-- [x] Complete this readme with screenshots, description etc.
 - [x] Implement user interface
 - [x] Allow initial state to be read from text file
-- [x] revise code(it's messy)
-- [x] Add more control (speed,pause, undo etc.)
-- [ ] Implement more sophisticated
-- [ ] Allow user setup custom initial state.
+- [x] Revise code(it's messy)
+- [ ] Add more control (speed,pause, undo etc.)(ongoing)
+- [ ] Allow initial state to be read from ire file
+- [ ] Add more pattern
+- [ ] Implement more nicer ui
 - [ ] Release stable program
 
 

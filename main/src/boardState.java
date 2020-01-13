@@ -1,6 +1,4 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -14,7 +12,6 @@ public class boardState {
     public boardState(int width, int height) {
         this.board = new Boolean[height][width];
         this.previousBoard = new Boolean[height][width];
-
     }
 
     public boardState(Boolean[][] customBoard) {

@@ -7,11 +7,13 @@ public class boardGui extends JPanel {
     private int width;
     private Boolean[][] board;
     private int generationCounter=0;
+    private JButton button;
 
     public boardGui(Boolean[][] board){
         this.board = board;
         this.height = board.length;
         this.width = board[0].length;
+
     }
 
     @Override
