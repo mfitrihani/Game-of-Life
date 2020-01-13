@@ -7,10 +7,10 @@
 >
 >[Excerpt From Wiki](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
-`Screenshots
+`Screenshot
 `
 
-![gif of program](https://imgur.com/onBNIRp.gif)
+![gif of program](https://imgur.com/3PslwqE.gif)
 
 `Planned Stuffs
 `

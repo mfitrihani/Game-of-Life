@@ -23,21 +23,32 @@ public class boardState {
         BufferedReader temp = new BufferedReader(new FileReader(textFilePath));
         StringBuilder stringBuilder = new StringBuilder();
         String line = temp.readLine();
+        int max = 0;
         while (line != null) {
+            if (line.length()>max)
+                max = line.length();
             stringBuilder.append(line).append(" ");
             line = temp.readLine();
         }
         String[] temp1 = stringBuilder.toString().split(" ");
-        String[][] tempBoard = new String[temp1.length][temp1[0].length()];
+        String[][] tempBoard = new String[temp1.length][max];
         for (int x = 0; x < temp1.length; x++) {
-            tempBoard[x] = temp1[x].split("");
+            for (int y = 0 ; y < temp1[x].length() ; y++){
+                tempBoard[x][y] = String.valueOf(temp1[x].charAt(y));
+            }
+        }
+        for (int x = 0 ; x < tempBoard.length ; x++){
+            for (int y = 0 ; y < tempBoard[0].length ; y++){
+                if (tempBoard[x][y] == null)
+                    tempBoard[x][y] = ".";
+            }
         }
 
         this.board = new Boolean[tempBoard.length][tempBoard[0].length];
 
         for (int x = 0; x < tempBoard.length; x++) {
             for (int y = 0; y < tempBoard[0].length; y++) {
-                board[x][y] = tempBoard[x][y].equals("*");
+                board[x][y] = tempBoard[x][y].equals("O");
             }
         }
         previousBoard = new Boolean[tempBoard.length][tempBoard[0].length];
@@ -75,7 +86,7 @@ public class boardState {
     }
 
     public void play() {
-        new Timer(100, e -> {
+        new Timer(50, e -> {
             nextState();
             testGUI.repaint();
         }).start();
