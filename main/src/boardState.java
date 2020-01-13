@@ -1,4 +1,6 @@
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -52,9 +54,20 @@ public class boardState {
         play.addActionListener(e -> play());
         play.setBorder(null);
         play.setLocation(0, 10);
-        play.setText("PLAY");
+        play.setText("Play");
         play.setSize(50, 20);
         testGUI.add(play);
+        //next button
+        JButton next = new JButton();
+        next.addActionListener(e -> {
+            nextState();
+            testGUI.repaint();
+        });
+        next.setBorder(null);
+        next.setLocation(60,10);
+        next.setText("Next");
+        next.setSize(50, 20);
+        testGUI.add(next);
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
