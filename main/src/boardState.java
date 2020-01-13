@@ -56,26 +56,13 @@ public class boardState {
 
     public void render() {
         testGUI = new boardGui(board);
-        testGUI.setLayout(null);
         //play button
-        JButton play = new JButton();
-        play.addActionListener(e -> play());
-        play.setBorder(null);
-        play.setLocation(0, 10);
-        play.setText("Play");
-        play.setSize(50, 20);
-        testGUI.add(play);
+        testGUI.Play.addActionListener(e -> play());
         //next button
-        JButton next = new JButton();
-        next.addActionListener(e -> {
+        testGUI.nextButton.addActionListener(e -> {
             nextState();
             testGUI.repaint();
         });
-        next.setBorder(null);
-        next.setLocation(60,10);
-        next.setText("Next");
-        next.setSize(50, 20);
-        testGUI.add(next);
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
