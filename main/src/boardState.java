@@ -6,7 +6,8 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class boardState {
-    boardGui testGUI;
+    private boardGui testGUI;
+    private int speed = 1000 ;
     private Boolean[][] board, previousBoard;
 
     public boardState(int width, int height) {
@@ -63,6 +64,10 @@ public class boardState {
             nextState();
             testGUI.repaint();
         });
+        //speed
+        testGUI.speed.addActionListener(e -> {
+            System.out.println(testGUI.speed.getSelectedObjects()[0]);
+        });
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
@@ -72,8 +77,11 @@ public class boardState {
         frame.setVisible(true);
     }
 
+    public void changeSpeed(int speed){
+        this.speed = speed;
+    }
     public void play() {
-        new Timer(50, e -> {
+        new Timer(speed, e -> {
             nextState();
             testGUI.repaint();
         }).start();
