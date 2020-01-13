@@ -7,6 +7,10 @@
 >
 >[Excerpt From Wiki](https://en.wikipedia.org/wiki/Conway%27s_Game_of_Life)
 
+`Prerequisite`
+- JDK version 13 or newer.
+- JavaFX jdk version 12 or newer.
+
 `Screenshot
 `
 
