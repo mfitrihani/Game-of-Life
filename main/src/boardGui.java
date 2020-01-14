@@ -9,7 +9,8 @@ public class boardGui extends JPanel {
     private int generationCounter=0;
     JButton Play;
     JButton nextButton;
-    JComboBox speed;
+    JSlider speedSlider;
+    private JLabel speedLabel;
 
     public boardGui(Boolean[][] board){
         this.board = board;
@@ -17,7 +18,8 @@ public class boardGui extends JPanel {
         this.width = board[0].length;
         super.add(Play);
         super.add(nextButton);
-        super.add(speed);
+        super.add(speedSlider);
+        super.add(speedLabel);
     }
 
     @Override

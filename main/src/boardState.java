@@ -65,9 +65,7 @@ public class boardState {
             testGUI.repaint();
         });
         //speed
-        testGUI.speed.addActionListener(e -> {
-            System.out.println(testGUI.speed.getSelectedObjects()[0]);
-        });
+        testGUI.speedSlider.addChangeListener(e -> changeSpeed(testGUI.speedSlider.getValue()));
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);

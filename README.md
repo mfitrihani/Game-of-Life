@@ -9,7 +9,6 @@
 
 `Prerequisite`
 - JDK version 13 or newer.
-- JavaFX jdk version 12 or newer.
 
 `Screenshot
 `
@@ -24,7 +23,7 @@
 - [ ] Add more control (speed,pause, undo etc.)(ongoing)
 - [ ] Allow initial state to be read from ire file
 - [ ] Add more pattern
-- [ ] Implement more nicer ui
+- [ ] Implement nicer ui
 - [ ] Release stable program
 
 
