@@ -7,18 +7,17 @@ import java.util.Arrays;
 import java.util.Random;
 
 public class boardState {
+    private ArrayList<Boolean[][]> previousBoards = new ArrayList<>(1000);
     private boardGui testGUI;
     private int speed = 100 ;
-    private Boolean[][] board, previousBoard;
+    private Boolean[][] board;
 
     public boardState(int width, int height) {
         this.board = new Boolean[height][width];
-        this.previousBoard = new Boolean[height][width];
     }
 
     public boardState(Boolean[][] customBoard) {
         this.board = customBoard;
-        this.previousBoard = customBoard;
     }
 
     public boardState(String textFilePath) throws IOException {
@@ -53,7 +52,6 @@ public class boardState {
                 board[x][y] = tempBoard[x][y].equals("O");
             }
         }
-        previousBoard = new Boolean[tempBoard.length][tempBoard[0].length];
     }
 
     public void render() {
@@ -62,11 +60,13 @@ public class boardState {
         testGUI.Play.addActionListener(e -> play());
         //next button
         testGUI.nextButton.addActionListener(e -> {
+            testGUI.generationCounter++;
             nextState();
             testGUI.repaint();
         });
         //undo button
         testGUI.undoButton.addActionListener(e -> {
+            testGUI.generationCounter--;
             undo();
             testGUI.repaint();
         });
@@ -95,16 +95,22 @@ public class boardState {
     }
 
     public void undo() {
-        for (int x = 0; x < board.length; x++) {
-            board[x] = Arrays.copyOf(previousBoard[x], previousBoard[x].length);
-            Arrays.fill(previousBoard[x], null);
+        if (previousBoards.size()<1){
+            JOptionPane.showMessageDialog(testGUI, "Previous state does not exist");
+        }
+        else {
+            System.out.println("pressed");
+            Boolean[][] temp = previousBoards.get(previousBoards.size()-1);
+            for (int x = 0; x < board.length; x++) {
+                this.board[x] = Arrays.copyOf(temp[x],temp[x].length);
+            }
+            System.out.println("pass");
+            previousBoards.remove(previousBoards.size()-1);
         }
     }
 
     public void nextState() {
-        //copy board to previous board
-        for (int x = 0; x < board.length; x++)
-            previousBoard[x] = Arrays.copyOf(board[x], board[x].length);
+        previousBoards.add(board.clone());
         //next state
         Boolean[][] tempBoard = new Boolean[board.length][board[0].length];
         for (int x = 0; x < tempBoard.length; x++) {
@@ -147,22 +153,17 @@ public class boardState {
                 board[x][y] = new Random().nextBoolean();
             }
         }
-        for (int x = 0; x < board.length; x++) {
-            previousBoard[x] = Arrays.copyOf(board[x], board[x].length);
-        }
     }
 
     public void allAliveState() {
         for (int x = 0; x < board.length; x++) {
             Arrays.fill(board[x], true);
-            Arrays.fill(previousBoard[x], true);
         }
     }
 
     public void allDeathState() {
         for (int x = 0; x < board.length; x++) {
             Arrays.fill(board[x], false);
-            Arrays.fill(previousBoard[x], false);
         }
     }
 
@@ -170,12 +171,7 @@ public class boardState {
         for (Boolean[] s : board) {
             System.out.println(Arrays.toString(s));
         }
-        System.out.println();
         System.out.println("________________________________________");
-        for (Boolean[] s : previousBoard) {
-            System.out.println(Arrays.toString(s));
-        }
-        System.out.println();
     }
 
     public int getWidth() {

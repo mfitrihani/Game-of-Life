@@ -6,7 +6,7 @@ public class boardGui extends JPanel {
     private int height;
     private int width;
     private Boolean[][] board;
-    private int generationCounter=0;
+    int generationCounter=0;
     JButton Play;
     JButton nextButton;
     JSlider speedSlider;
@@ -54,7 +54,7 @@ public class boardGui extends JPanel {
         super.paintComponent(g);
         Color gColor = g.getColor();
 
-        g.drawString("Generation: " + generationCounter++, 0, 10);
+        g.drawString("Generation: " + generationCounter, 0, 10);
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 if (board[j][i]) {
