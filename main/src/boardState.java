@@ -7,7 +7,7 @@ import java.util.Random;
 
 public class boardState {
     private boardGui testGUI;
-    private int speed = 1000 ;
+    private int speed = 100 ;
     private Boolean[][] board, previousBoard;
 
     public boardState(int width, int height) {

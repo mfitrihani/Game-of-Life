@@ -11,6 +11,7 @@ public class boardGui extends JPanel {
     JButton nextButton;
     JSlider speedSlider;
     private JLabel speedLabel;
+    private int sizePreference =1 ;
 
     public boardGui(Boolean[][] board){
         this.board = board;
@@ -20,6 +21,22 @@ public class boardGui extends JPanel {
         super.add(nextButton);
         super.add(speedSlider);
         super.add(speedLabel);
+        autoResize();
+    }
+
+    private void autoResize() {
+        if (width<=50||height<=50)
+            sizePreference = 8;
+        if (width>=100||height>=100)
+            sizePreference = 5;
+        if (width>=200||height>=200)
+            sizePreference = 4;
+        if (width>=300||height>=300)
+            sizePreference = 3;
+        if (width>=400||height>=400)
+            sizePreference = 2;
+        if (width>=500||height>=500)
+            sizePreference = 1 ;
     }
 
     @Override
@@ -38,7 +55,7 @@ public class boardGui extends JPanel {
             for (int j = 0; j < height; j++) {
                 if (board[j][i]) {
                     g.setColor(Color.red);
-                    g.fillRect(i * 1, j * 1+30, 1, 1);
+                    g.fillRect(i * sizePreference, j * sizePreference+30, sizePreference, sizePreference);
                 }
             }
         }
