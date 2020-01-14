@@ -9,7 +9,7 @@ import java.util.Random;
 public class boardState {
     private ArrayList<Boolean[][]> previousBoards = new ArrayList<>(1000);
     private boardGui testGUI;
-    private int speed = 100 ;
+    private int speed = 100;
     private Boolean[][] board;
 
     public boardState(int width, int height) {
@@ -21,12 +21,18 @@ public class boardState {
     }
 
     public boardState(String textFilePath) throws IOException {
+        String extension = textFilePath.substring(textFilePath.lastIndexOf('.') + 1);
+        if (extension.equals("txt"))
+            readTextFile(textFilePath);
+    }
+
+    private void readTextFile(String textFilePath) throws IOException {
         BufferedReader temp = new BufferedReader(new FileReader(textFilePath));
         StringBuilder stringBuilder = new StringBuilder();
         String line = temp.readLine();
         int max = 0;
         while (line != null) {
-            if (line.length()>max)
+            if (line.length() > max)
                 max = line.length();
             stringBuilder.append(line).append(" ");
             line = temp.readLine();
@@ -34,12 +40,12 @@ public class boardState {
         String[] temp1 = stringBuilder.toString().split(" ");
         String[][] tempBoard = new String[temp1.length][max];
         for (int x = 0; x < temp1.length; x++) {
-            for (int y = 0 ; y < temp1[x].length() ; y++){
+            for (int y = 0; y < temp1[x].length(); y++) {
                 tempBoard[x][y] = String.valueOf(temp1[x].charAt(y));
             }
         }
-        for (int x = 0 ; x < tempBoard.length ; x++){
-            for (int y = 0 ; y < tempBoard[0].length ; y++){
+        for (int x = 0; x < tempBoard.length; x++) {
+            for (int y = 0; y < tempBoard[0].length; y++) {
                 if (tempBoard[x][y] == null)
                     tempBoard[x][y] = ".";
             }
@@ -66,13 +72,16 @@ public class boardState {
         });
         //undo button
         testGUI.undoButton.addActionListener(e -> {
-            testGUI.generationCounter--;
-            undo();
-            testGUI.repaint();
+            if (previousBoards.size() < 1) {
+                JOptionPane.showMessageDialog(testGUI, "Previous state does not exist");
+            } else {
+                testGUI.generationCounter--;
+                undo();
+                testGUI.repaint();
+            }
         });
         //speed slider
         testGUI.speedSlider.addChangeListener(e -> changeSpeed(testGUI.speedSlider.getValue()));
-
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
@@ -82,31 +91,26 @@ public class boardState {
         frame.setVisible(true);
     }
 
-    public void changeSpeed(int speed){
+    public void changeSpeed(int speed) {
         this.speed = speed;
         //speed viewer
-        testGUI.speedViewer.setText(speed+" ms");
+        testGUI.speedViewer.setText(speed + " ms");
     }
+
     public void play() {
         new Timer(speed, e -> {
+            testGUI.generationCounter++;
             nextState();
             testGUI.repaint();
         }).start();
     }
 
     public void undo() {
-        if (previousBoards.size()<1){
-            JOptionPane.showMessageDialog(testGUI, "Previous state does not exist");
+        Boolean[][] temp = previousBoards.get(previousBoards.size() - 1);
+        for (int x = 0; x < board.length; x++) {
+            this.board[x] = Arrays.copyOf(temp[x], temp[x].length);
         }
-        else {
-            System.out.println("pressed");
-            Boolean[][] temp = previousBoards.get(previousBoards.size()-1);
-            for (int x = 0; x < board.length; x++) {
-                this.board[x] = Arrays.copyOf(temp[x],temp[x].length);
-            }
-            System.out.println("pass");
-            previousBoards.remove(previousBoards.size()-1);
-        }
+        previousBoards.remove(previousBoards.size() - 1);
     }
 
     public void nextState() {
@@ -137,9 +141,7 @@ public class boardState {
         int neighbor = 0;
         for (int y = -1; y < 2; y++) {
             for (int x = -1; x < 2; x++) {
-                if ((y == 0) && (x == 0)) {
-                } else if (((x + width) < 0) || ((y + height) < 0)) {
-                } else if ((x + width) >= board[0].length || (y + height) >= board.length) {
+                if ((y == 0) && (x == 0) || (((x + width) < 0) || (y + height < 0)) || (x + width) >= board[0].length || (y + height) >= board.length) {
                 } else if (board[y + height][x + width])
                     neighbor++;
             }
@@ -172,13 +174,5 @@ public class boardState {
             System.out.println(Arrays.toString(s));
         }
         System.out.println("________________________________________");
-    }
-
-    public int getWidth() {
-        return board[0].length;
-    }
-
-    public int getHeight() {
-        return board.length;
     }
 }
