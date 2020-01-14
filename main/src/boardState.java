@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
@@ -62,6 +63,11 @@ public class boardState {
         //next button
         testGUI.nextButton.addActionListener(e -> {
             nextState();
+            testGUI.repaint();
+        });
+        //undo button
+        testGUI.undoButton.addActionListener(e -> {
+            undo();
             testGUI.repaint();
         });
         //speed slider

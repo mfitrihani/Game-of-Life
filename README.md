@@ -22,7 +22,7 @@
 - [x] Revise code(it's messy)
 - [ ] Add more control (speed,pause, undo etc.)(ongoing)
 - [ ] Allow initial state to be read from ire file
-- [ ] Add more pattern
+- [x] Add more pattern
 - [ ] Implement nicer ui
 - [ ] Release stable program
 

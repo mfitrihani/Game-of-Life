@@ -12,6 +12,7 @@ public class boardGui extends JPanel {
     JSlider speedSlider;
     private JLabel speedLabel;
     JLabel speedViewer;
+    JButton undoButton;
     private int sizePreference =1 ;
 
     public boardGui(Boolean[][] board){
@@ -20,8 +21,9 @@ public class boardGui extends JPanel {
         this.width = board[0].length;
         super.add(Play);
         super.add(nextButton);
-        super.add(speedSlider);
+        super.add(undoButton);
         super.add(speedLabel);
+        super.add(speedSlider);
         super.add(speedViewer);
         autoResize();
     }
