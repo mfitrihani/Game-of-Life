@@ -64,8 +64,9 @@ public class boardState {
             nextState();
             testGUI.repaint();
         });
-        //speed
+        //speed slider
         testGUI.speedSlider.addChangeListener(e -> changeSpeed(testGUI.speedSlider.getValue()));
+
 
         JFrame frame = new JFrame();
         frame.getContentPane().add(testGUI);
@@ -77,6 +78,8 @@ public class boardState {
 
     public void changeSpeed(int speed){
         this.speed = speed;
+        //speed viewer
+        testGUI.speedViewer.setText(speed+" ms");
     }
     public void play() {
         new Timer(speed, e -> {
