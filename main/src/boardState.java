@@ -39,55 +39,57 @@ public class boardState {
         }
         //break into array of lines
         String[] temp = stringBuilder.toString().split("\\$");
-        //find max width
-        int max = 0, control = 0;
-        for (String s : temp){
-            String[] splitNumber = s.split("\\D+");
-            for (String x : splitNumber){
-                if (!x.equals(""))
-                    control+=Integer.parseInt(x);
-            }
-            if (control>max)
-                max = control;
-            control = 0;
-        }
-        //split digits and characters
-        ArrayList<Integer> temporaryDigit = new ArrayList<>();
-        ArrayList<String> temporaryCharacter = new ArrayList<>();
-        String[][] characters = new String[temp.length][max];
-        Integer[][] digits = new Integer[temp.length][max];
+        //create empty holder
+        String[] holder = new String[temp.length];
+        //write into secondStringBuilder
+        StringBuilder secondStringBuilder = new StringBuilder();
+        stringBuilder.setLength(0);
+        stringBuilder.append("0");
         for (int x = 0 ; x < temp.length ; x++){
-            String [] splitCharacters = temp[x].split("\\d");
-            for (int y = 0; y < splitCharacters.length ; y++){
-                if (!splitCharacters[y].equals(""))
-                    temporaryCharacter.add(splitCharacters[y]);
-            }
-            characters[x] = temporaryCharacter.toArray(new String[0]);
-            temporaryCharacter.clear();
-            String[] splitNumber = temp[x].split("\\D+");
-            for (int y = 0; y < splitNumber.length ; y++){
-                if (!splitNumber[y].equals(""))
-                    temporaryDigit.add(Integer.parseInt(splitNumber[y]));
-            }
-            digits[x] = temporaryDigit.toArray(new Integer[0]);
-            temporaryDigit.clear();
-        }
-        //write into temporary board
-        String[][] tempBoard = new String[temp.length][max];
-        control = 0;
-        for (int x = 0 ; x < digits.length ; x++){
-            for (int y = 0 ; y < digits[x].length ; y++){
-                for (int z = 0 ; z<digits[x][y] ; z++){
-
+            for (int y =0 ; y < temp[x].length() ; y++){
+                if (Character.isDigit(temp[x].charAt(y))){
+                    stringBuilder.append(temp[x].charAt(y));
+                }
+                else {
+                    if (Integer.parseInt(stringBuilder.toString())>0){
+                        for (int z = 0 ; z<Integer.parseInt(stringBuilder.toString()) ; z++){
+                            secondStringBuilder.append(temp[x].charAt(y));
+                        }
+                    }
+                    else {
+                        secondStringBuilder.append(temp[x].charAt(y));
+                    }
+                    stringBuilder.setLength(0);
+                    stringBuilder.append("0");
                 }
             }
+            secondStringBuilder.append(" ");
         }
-
-        for (String[] s : characters){
-            System.out.println(Arrays.toString(s));
+        //rewrite into holder
+        holder = secondStringBuilder.toString().split(" ");
+        //find max length for board size
+        int max = 0;
+        for (String s : holder){
+            if (s.length()>max)
+                max = s.length();
         }
-        System.out.println(max);
-        System.out.println(Arrays.toString(temp));
+        //create and write into tempBoard
+        String[][] tempBoard = new String[holder.length][max];
+        for (int x = 0 ; x < holder.length ; x++){
+            for (int y = 0 ; y < holder[x].length() ; y++){
+                tempBoard[x][y] = String.valueOf(holder[x].charAt(y));
+            }
+        }
+        //write into main board
+        this.board = new Boolean[tempBoard.length][tempBoard[0].length];
+        for (int x = 0 ; x < board.length ; x++){
+            for (int y = 0 ; y < board[0].length ; y++){
+                if (tempBoard[x][y] == null)
+                    board[x][y] = false;
+                else
+                    board[x][y] = tempBoard[x][y].equals("O")||tempBoard[x][y].equals("o");
+            }
+        }
     }
 
     private void readTextFile(String textFilePath) throws IOException {
@@ -119,7 +121,7 @@ public class boardState {
 
         for (int x = 0; x < tempBoard.length; x++) {
             for (int y = 0; y < tempBoard[0].length; y++) {
-                board[x][y] = tempBoard[x][y].equals("O");
+                board[x][y] = tempBoard[x][y].equals("O")||tempBoard[x][y].equals("o");
             }
         }
     }
