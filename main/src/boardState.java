@@ -1,18 +1,18 @@
 import javax.swing.*;
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicBoolean;
 
 public class boardState {
     private ArrayList<Boolean[][]> previousBoards = new ArrayList<>(1000);
     private boardGui testGUI;
     private int speed = 100;
     private Boolean[][] board;
-    private AtomicBoolean isPlaying = new AtomicBoolean(true);
+    private boolean isPlaying = true;
     private Timer pl;
 
     public boardState(int width, int height) {
@@ -136,14 +136,15 @@ public class boardState {
             testGUI.repaint();
         });
         testGUI.Play.addActionListener(e -> {
-            play();
-            if (isPlaying.get()){
+            if (isPlaying){
                 testGUI.Play.setText("Pause");
-                isPlaying.set(false);
+                isPlaying =false;
+                pl.start();
             }
             else {
                 testGUI.Play.setText("Play");
-                isPlaying.set(true);
+                isPlaying=true;
+                pl.stop();
             }
         });
         //next button
@@ -171,6 +172,8 @@ public class boardState {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
+        frame.getContentPane().setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
+        frame.pack();
     }
 
     private void changeSpeed(int speed) {
@@ -178,13 +181,6 @@ public class boardState {
         //speed viewer
         pl.setDelay(speed);
         testGUI.speedViewer.setText(speed + " ms");
-    }
-
-    private void play() {
-        if (isPlaying.get()){
-            pl.start();
-        }
-        else pl.stop();
     }
 
     public void undo() {

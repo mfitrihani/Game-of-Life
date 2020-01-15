@@ -19,28 +19,17 @@ public class boardGui extends JPanel {
         this.board = board;
         this.height = board.length;
         this.width = board[0].length;
-        super.add(Play);
-        super.add(nextButton);
-        super.add(undoButton);
-        super.add(speedLabel);
-        super.add(speedSlider);
-        super.add(speedViewer);
+        add(Play);
+        add(nextButton);
+        add(undoButton);
+        add(speedLabel);
+        add(speedSlider);
+        add(speedViewer);
         autoResize();
     }
 
     private void autoResize() {
-        if (width<=50||height<=50)
-            sizePreference = 8;
-        if (width>=100||height>=100)
-            sizePreference = 5;
-        if (width>=200||height>=200)
-            sizePreference = 4;
-        if (width>=300||height>=300)
-            sizePreference = 3;
-        if (width>=400||height>=400)
-            sizePreference = 2;
-        if (width>=500||height>=500)
-            sizePreference = 1 ;
+        sizePreference = 500/Math.max(width, height);
     }
 
     @Override
