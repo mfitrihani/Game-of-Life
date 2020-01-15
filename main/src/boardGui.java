@@ -30,6 +30,7 @@ public class boardGui extends JPanel {
 
     private void autoResize() {
         sizePreference = 500/Math.max(width, height);
+        if (sizePreference<1) sizePreference = 1;
     }
 
     @Override
