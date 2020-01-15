@@ -5,12 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class boardState {
     private ArrayList<Boolean[][]> previousBoards = new ArrayList<>(1000);
     private boardGui testGUI;
     private int speed = 100;
     private Boolean[][] board;
+    private AtomicBoolean isPlaying = new AtomicBoolean(true);
+    private Timer pl;
 
     public boardState(int width, int height) {
         this.board = new Boolean[height][width];
@@ -129,7 +132,22 @@ public class boardState {
     public void render() {
         testGUI = new boardGui(board);
         //play button
-        testGUI.Play.addActionListener(e -> play());
+        pl = new Timer(speed, e -> {
+            testGUI.generationCounter++;
+            nextState();
+            testGUI.repaint();
+        });
+        testGUI.Play.addActionListener(e -> {
+            play();
+            if (isPlaying.get()){
+                testGUI.Play.setText("Pause");
+                isPlaying.set(false);
+            }
+            else {
+                testGUI.Play.setText("Play");
+                isPlaying.set(true);
+            }
+        });
         //next button
         testGUI.nextButton.addActionListener(e -> {
             testGUI.generationCounter++;
@@ -164,11 +182,10 @@ public class boardState {
     }
 
     public void play() {
-        new Timer(speed, e -> {
-            testGUI.generationCounter++;
-            nextState();
-            testGUI.repaint();
-        }).start();
+        if (isPlaying.get()){
+            pl.start();
+        }
+        else pl.stop();
     }
 
     public void undo() {
