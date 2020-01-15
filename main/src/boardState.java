@@ -178,6 +178,7 @@ public class boardState {
     public void changeSpeed(int speed) {
         this.speed = speed;
         //speed viewer
+        pl.setDelay(speed);
         testGUI.speedViewer.setText(speed + " ms");
     }
 
