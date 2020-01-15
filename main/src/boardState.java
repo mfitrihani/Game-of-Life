@@ -42,8 +42,6 @@ public class boardState {
         }
         //break into array of lines
         String[] temp = stringBuilder.toString().split("\\$");
-        //create empty holder
-        String[] holder = new String[temp.length];
         //write into secondStringBuilder
         StringBuilder secondStringBuilder = new StringBuilder();
         stringBuilder.setLength(0);
@@ -68,8 +66,8 @@ public class boardState {
             }
             secondStringBuilder.append(" ");
         }
-        //rewrite into holder
-        holder = secondStringBuilder.toString().split(" ");
+        //create empty holder and write into it
+        String[] holder = secondStringBuilder.toString().split(" ");
         //find max length for board size
         int max = 0;
         for (String s : holder){
@@ -175,14 +173,14 @@ public class boardState {
         frame.setVisible(true);
     }
 
-    public void changeSpeed(int speed) {
+    private void changeSpeed(int speed) {
         this.speed = speed;
         //speed viewer
         pl.setDelay(speed);
         testGUI.speedViewer.setText(speed + " ms");
     }
 
-    public void play() {
+    private void play() {
         if (isPlaying.get()){
             pl.start();
         }
