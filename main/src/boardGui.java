@@ -12,6 +12,7 @@ public class boardGui{
     JLabel speedViewer;
     JButton undoButton;
     private JPanel mainUI;
+    private JTable table1;
     private int sizePreference = 1;
 
     public boardGui(Boolean[][] state){
@@ -19,6 +20,7 @@ public class boardGui{
         this.height = state.length;
         this.width = state[0].length;
         autoResize();
+        mainUI.add(new gamePanel(state));
         //add to frame
         JFrame main = new JFrame();
         main.add(mainUI);
