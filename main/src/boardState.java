@@ -133,7 +133,7 @@ public class boardState {
         pl = new Timer(speed, e -> {
             testGUI.generationCounter++;
             nextState();
-            testGUI.repaint();
+//            testGUI.repaint();
         });
         testGUI.Play.addActionListener(e -> {
             if (isPlaying){
@@ -151,29 +151,20 @@ public class boardState {
         testGUI.nextButton.addActionListener(e -> {
             testGUI.generationCounter++;
             nextState();
-            testGUI.repaint();
+//            testGUI.repaint();
         });
         //undo button
         testGUI.undoButton.addActionListener(e -> {
             if (previousBoards.size() < 1) {
-                JOptionPane.showMessageDialog(testGUI, "Previous state does not exist");
+//                JOptionPane.showMessageDialog(testGUI, "Previous state does not exist");
             } else {
                 testGUI.generationCounter--;
                 undo();
-                testGUI.repaint();
+//                testGUI.repaint();
             }
         });
         //speed slider
         testGUI.speedSlider.addChangeListener(e -> changeSpeed(testGUI.speedSlider.getValue()));
-
-        JFrame frame = new JFrame();
-        frame.getContentPane().add(testGUI);
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationByPlatform(true);
-        frame.setVisible(true);
-        frame.getContentPane().setPreferredSize(Toolkit.getDefaultToolkit().getScreenSize());
-        frame.pack();
     }
 
     private void changeSpeed(int speed) {

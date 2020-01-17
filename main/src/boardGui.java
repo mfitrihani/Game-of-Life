@@ -1,31 +1,31 @@
 import javax.swing.*;
-import java.awt.*;
-import java.beans.Transient;
 
-public class boardGui extends JPanel {
+public class boardGui{
     private int height;
     private int width;
-    private Boolean[][] board;
-    int generationCounter=0;
+    private Boolean[][] state;
+    int generationCounter = 0;
     JButton Play;
     JButton nextButton;
     JSlider speedSlider;
     private JLabel speedLabel;
     JLabel speedViewer;
     JButton undoButton;
-    private int sizePreference =1 ;
+    private JPanel mainUI;
+    private int sizePreference = 1;
 
-    public boardGui(Boolean[][] board){
-        this.board = board;
-        this.height = board.length;
-        this.width = board[0].length;
-        add(Play);
-        add(nextButton);
-        add(undoButton);
-        add(speedLabel);
-        add(speedSlider);
-        add(speedViewer);
+    public boardGui(Boolean[][] state){
+        this.state= state;
+        this.height = state.length;
+        this.width = state[0].length;
         autoResize();
+        //add to frame
+        JFrame main = new JFrame();
+        main.add(mainUI);
+        main.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        main.setLocationByPlatform(true);
+        main.setVisible(true);
+        main.pack();
     }
 
     private void autoResize() {
@@ -33,28 +33,23 @@ public class boardGui extends JPanel {
         if (sizePreference<1) sizePreference = 1;
     }
 
-    @Override
-    @Transient
-    public Dimension getPreferredSize() {
-        return new Dimension(width * 4, height * 4+30);
-    }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Color gColor = g.getColor();
-
-        g.drawString("Generation: " + generationCounter, 0, 10);
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                if (board[j][i]) {
-                    g.setColor(Color.red);
-                    g.fillRect(i * sizePreference, j * sizePreference+30, sizePreference, sizePreference);
-                }
-            }
-        }
-
-        g.setColor(gColor);
-    }
+//    @Override
+//    protected void paintComponent(Graphics g) {
+//        super.paintComponent(g);
+//        Color gColor = g.getColor();
+//
+//        g.drawString("Generation: " + generationCounter, 0, 10);
+//        for (int i = 0; i < width; i++) {
+//            for (int j = 0; j < height; j++) {
+//                if (mainUI[j][i]) {
+//                    g.setColor(Color.white);
+//                    g.fillRect(i * sizePreference, j * sizePreference+70, sizePreference, sizePreference);
+//                }
+//            }
+//        }
+//
+//        g.setColor(gColor);
+//    }
 }
 

@@ -1,90 +1,107 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="boardGui">
-  <grid id="27dc6" layout-manager="GridLayoutManager" row-count="3" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+  <grid id="27dc6" binding="mainUI" layout-manager="GridLayoutManager" row-count="2" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="0" left="0" bottom="0" right="0"/>
     <constraints>
       <xy x="20" y="20" width="577" height="400"/>
     </constraints>
-    <properties/>
-    <border type="none"/>
+    <properties>
+      <background color="-14013910"/>
+      <foreground color="-14013910"/>
+    </properties>
+    <border type="etched">
+      <title-color color="-4473925"/>
+    </border>
     <children>
-      <hspacer id="21e3e">
+      <grid id="708b8" layout-manager="GridLayoutManager" row-count="2" column-count="5" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
         <constraints>
-          <grid row="0" column="1" row-span="1" col-span="5" vsize-policy="1" hsize-policy="0" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </hspacer>
-      <vspacer id="76228">
-        <constraints>
-          <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="1" anchor="0" fill="2" indent="0" use-parent-layout="false"/>
-        </constraints>
-      </vspacer>
-      <component id="f5e8b" class="javax.swing.JLabel" binding="speedLabel">
-        <constraints>
-          <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="0" column="0" row-span="2" col-span="5" vsize-policy="1" hsize-policy="1" anchor="1" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
-          <text value="Speed"/>
+          <background color="-14013910"/>
+          <foreground color="-14013910"/>
         </properties>
-      </component>
-      <component id="3990" class="javax.swing.JSlider" binding="speedSlider">
-        <constraints>
-          <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <autoscrolls value="true"/>
-          <inverted value="true"/>
-          <maximum value="500"/>
-          <minimum value="1"/>
-          <snapToTicks value="false"/>
-          <toolTipText value="Speed"/>
-          <value value="100"/>
-          <valueIsAdjusting value="true"/>
-        </properties>
-        <clientProperties>
-          <JSlider.isFilled class="java.lang.Boolean" value="false"/>
-        </clientProperties>
-      </component>
-      <component id="5c444" class="javax.swing.JButton" binding="nextButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <horizontalAlignment value="0"/>
-          <text value="Next"/>
-          <verticalAlignment value="0"/>
-        </properties>
-      </component>
-      <component id="4cea6" class="javax.swing.JButton" binding="Play">
-        <constraints>
-          <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <hideActionText value="false"/>
-          <horizontalAlignment value="0"/>
-          <horizontalTextPosition value="0"/>
-          <text value="Play"/>
-          <verticalAlignment value="0"/>
-        </properties>
-      </component>
-      <component id="1edb4" class="javax.swing.JLabel" binding="speedViewer">
-        <constraints>
-          <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <background color="-15321279"/>
-          <enabled value="true"/>
-          <text value="100 ms"/>
-        </properties>
-      </component>
-      <component id="a15df" class="javax.swing.JButton" binding="undoButton" default-binding="true">
-        <constraints>
-          <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <horizontalAlignment value="0"/>
-          <text value="Undo"/>
-        </properties>
-      </component>
+        <border type="none"/>
+        <children>
+          <component id="1edb4" class="javax.swing.JLabel" binding="speedViewer">
+            <constraints>
+              <grid row="0" column="4" row-span="1" col-span="1" vsize-policy="1" hsize-policy="1" anchor="2" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-15321279"/>
+              <enabled value="true"/>
+              <foreground color="-1"/>
+              <text value="100 ms"/>
+            </properties>
+          </component>
+          <component id="a15df" class="javax.swing.JButton" binding="undoButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <text value="Undo"/>
+            </properties>
+          </component>
+          <component id="5c444" class="javax.swing.JButton" binding="nextButton" default-binding="true">
+            <constraints>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+              <horizontalAlignment value="0"/>
+              <text value="Next"/>
+              <verticalAlignment value="0"/>
+            </properties>
+          </component>
+          <component id="4cea6" class="javax.swing.JButton" binding="Play">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <background color="-16777216"/>
+              <foreground color="-1"/>
+              <hideActionText value="false"/>
+              <horizontalAlignment value="0"/>
+              <horizontalTextPosition value="0"/>
+              <text value="Play "/>
+              <verticalAlignment value="0"/>
+            </properties>
+          </component>
+          <component id="f5e8b" class="javax.swing.JLabel" binding="speedLabel">
+            <constraints>
+              <grid row="1" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <foreground color="-1"/>
+              <text value="Speed"/>
+            </properties>
+          </component>
+          <component id="3990" class="javax.swing.JSlider" binding="speedSlider">
+            <constraints>
+              <grid row="1" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <autoscrolls value="true"/>
+              <background color="-14013910"/>
+              <inverted value="true"/>
+              <maximum value="500"/>
+              <minimum value="1"/>
+              <snapToTicks value="false"/>
+              <toolTipText value="Speed"/>
+              <value value="100"/>
+              <valueIsAdjusting value="true"/>
+            </properties>
+            <clientProperties>
+              <JSlider.isFilled class="java.lang.Boolean" value="false"/>
+            </clientProperties>
+          </component>
+        </children>
+      </grid>
     </children>
   </grid>
 </form>
